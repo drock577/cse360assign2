@@ -2,11 +2,12 @@
  * Author: Dylan Lang
  * Class ID: 341
  * Class : Caliss CSE 360 W Spring 2020
- * Assignment #1, Simple List
+ * Assignment #2, Simple List Modification
  * This program creates a simple list
  * and has several functions to modify the list
+ * This program is a modification of my first assignment
  */
-package assign1;
+package cse360assign2;
 import java.util.Arrays;
 
 /**
@@ -41,11 +42,12 @@ public class SimpleList {
 	 * @param value integer we want to add to the list 
 	 */
 	public void apppend(int value) {
-		list = appender(list, value);// adder helper class, result overrides List
+		list = appender(list, value);// appender helper class, result overrides List
 		count++;// increment count
 	}
 	/**
 	 * this method removes a user provided value from our list, if it is present in List
+	 *
 	 * @param value integer value we want to remove, if present in our list
 	 */
 	public void remove(int value) {
@@ -67,27 +69,24 @@ public class SimpleList {
 	 * @return
 	 */
 	private int sizeChange(int[] inputArray, int typeChange) {
-		int arraySize = inputArray.length;
-		int newSize = 0;
-		double sizeChanger = 0;
-		if(typeChange == 1) {
+		int arraySize = inputArray.length; // size of our passed input array
+		int newSize = 0; // initializing variable
+		double sizeChanger = 0; // initializing variable
+		if(typeChange == 1) { // increase array size
 			if(count == arraySize) {
 				newSize = (int)arraySize/2; //typecast int so never decimal value
 				newSize += arraySize;
-				arraySize = newSize;// array size will change from initially 10 to 15 now
+				arraySize = newSize; // array size will change from initially 10 to 15 now
 			}
 		}
-		else if(typeChange == 2) {
-			sizeChanger = arraySize*.75;
-			newSize = (int)sizeChanger;
-			if(newSize >= count ) {
-				arraySize = newSize;
-			}
+		else if(typeChange == 2) { // decrease array size
+			sizeChanger = arraySize*.75; // decrease of 75% of totalsize
+			newSize = (int)sizeChanger; // typecase to int so newSize can be modified
+			if(newSize >= count) // if the size satisfies what needs to be change
+				arraySize = newSize; // arraySize is changed
 		}
 		return arraySize;
 	}
-	
-
 	/**
 	 * private so we can clean up our Add function.
 	 * adder helper class, we are able to add a value.
@@ -96,21 +95,20 @@ public class SimpleList {
 	 * @return List, with value added
 	 */
 	private int[] adder(int[] inputArray, int inputNumber) {
-		int arraySize = sizeChange(inputArray,1);
+		int arraySize = sizeChange(inputArray,1); // arraysize is used as  the size is no longer static (10) using sizeChange helper class
 		/*
 		 * Using ArraySize as the size of array is no longer forced to be 10
 		 */
-		int[] holdArray = new int[arraySize];//array act as copy of input array
-		int[] finalArray = new int[arraySize];// array acts as final array we return
+		int[] holdArray = new int[arraySize]; //array act as copy of input array
+		int[] finalArray = new int[arraySize] ;// array acts as final array we return
 		
 		for(int i=0; i<count; i++) // copy our inputed array to hold array
 			holdArray[i] = inputArray[i];
-		finalArray[0] = inputNumber;// add provided value in spot 0 of array
-		for(int i=0; i<(arraySize-1); i++)// copy hold array to starting at spot 1
+		finalArray[0] = inputNumber; // add provided value in spot 0 of array
+		for(int i=0; i<(arraySize-1); i++) // copy hold array to starting at spot 1
 			 finalArray[i+1] = holdArray[i];
 		return finalArray;
 	}
-	
 	/**
 	 * similar to the  private adder function above.
 	 * Only difference is adding the value at the end of the array
@@ -119,14 +117,13 @@ public class SimpleList {
 	 * @return
 	 */
 	private int[] appender(int[] inputArray, int inputNumber){
-		int arraySize = sizeChange(inputArray,1);
-		int[] finalArray = new int[arraySize];// array acts as final array we return		
+		int arraySize = sizeChange(inputArray,1); // arraysize is used as  the size is no longer static (10) using sizeChange helper class
+		int[] finalArray = new int[arraySize]; // array acts as final array we return		
 		for(int i=0; i<count; i++) // copy our inputed array to hold array
 			finalArray[i] = inputArray[i];
-		finalArray[count] = inputNumber;
+		finalArray[count] = inputNumber; //count before increment is the position we want to add the value to
 		return finalArray;
 	}
-	
 	/**
 	 * private so we can clean up our Remove function.
 	 * remover helper class, we are able to remove a value.
@@ -135,16 +132,14 @@ public class SimpleList {
 	 * @return List, with value removed
 	 */
 	private int[] remover(int[] inputArray, int positionValue) {
-		int arraySize = sizeChange(inputArray,2);
-		
+		int arraySize = sizeChange(inputArray,2);// arraysize is used as  the size is no longer static (10) using sizeChange helper class
 		int[] finalArray = new int[arraySize];  // array acts as final array we return
 		if(positionValue == 0){// we act differently if position is at 0.
-			for(int i=1; i<arraySize-1; i++){// we shift array 1 position down
+			for(int i=1; i<arraySize-1; i++)// we shift array 1 position down
 				finalArray[i-1] = inputArray[i];
-			}
 			return finalArray;
 		}
-		else {
+		else { // for all other functions
 			for(int i=0; i<positionValue; i++)// we copy array upto the position
 				finalArray[i] = inputArray[i];
 			for(int i=positionValue+1; i<arraySize-1; i++)// then at position we shift the remaining array down.
@@ -152,7 +147,6 @@ public class SimpleList {
 			return finalArray;
 		}
 	}
-	
 	/**
 	 * return the count of the number of item in our array
 	 * @return count of number of item in our array
@@ -164,7 +158,8 @@ public class SimpleList {
 	 * overriding actual toString class
 	 * Output created string of array
 	 * @return string of array. As an integer array for this class is 10 elements, an empty array would return: 
-	 * [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+	 * [0, 0, 0, 0, 0, 0, 0, 0, 0, 0] 
+	 * at initialization 
 	 */
 	public String toString() {
 		String result = Arrays.toString(list); // Using Arrays method toString to output described value above
@@ -178,7 +173,7 @@ public class SimpleList {
 	 */
 	public int search(int searchNum) {
 		for(int i=0; i<count; i++)
-			if(list[i] == searchNum)
+			if(list[i] == searchNum) // if the number we are searching for is present return it, if not return -1
 				return i;
 		return -1;
 	}
@@ -186,11 +181,10 @@ public class SimpleList {
 	 * Return the first element in the list.  If there are no elements in the list, I return -1.
 	 * @return first value of list
 	 */
-	
 	public int first() {
-		int returnValue = -1;
+		int returnValue = -1; // set return value to -1
 		if(count != 0) {
-			returnValue = list[0];
+			returnValue = list[0]; // change return value IFF is count is not 0
 		}
 		return returnValue;	
 	}
@@ -199,9 +193,9 @@ public class SimpleList {
 	 * @return last value of list
 	 */
 	public int last() {
-		int returnValue = -1;
+		int returnValue = -1; // set return value to -1
 		if(count != 0) {
-			returnValue = list[count-1];
+			returnValue = list[count-1]; // change return value IFF is count is not 0
 		}
 		return returnValue;	
 	}
@@ -210,7 +204,7 @@ public class SimpleList {
 	 * @return the number of empty indexes in our list array
 	 */
 	public int size() {
-		int returnValue = list.length - count;
+		int returnValue = list.length - count; // our return value is length of list - count, so all empty spots in list
 		return returnValue;
 	}
 }
