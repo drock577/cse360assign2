@@ -48,6 +48,37 @@ public class SimpleList {
 			}
 		}
 	}
+	
+	/**
+	 * private so we can clean up any function that requires us to adjust array size.
+	 * Here we supply our input array, calculate the size and make changes if required by the progam guidelines.
+	 * This is a helper class that either shrinks or increases the array size.
+	 * @param inputArray - array we may change size of
+	 * @param typeChange - type of change 1 for increase, 2 for decrease, else doesn't work
+	 * @return
+	 */
+	private int sizeChange(int[] inputArray, int typeChange) {
+		int arraySize = inputArray.length;
+		int newSize = 0;
+		double sizeChanger = 0;
+		if(typeChange == 1) {
+			if(count == arraySize) {
+				newSize = (int)arraySize/2; //typecast int so never decimal value
+				newSize += arraySize;
+				arraySize = newSize;// array size will change from initially 10 to 15 now
+			}
+		}
+		else if(typeChange == 2) {
+			sizeChanger = arraySize*.75;
+			newSize = (int)sizeChanger;
+			if(newSize >= count ) {
+				arraySize = newSize;
+			}
+		}
+		return arraySize;
+	}
+	
+
 	/**
 	 * private so we can clean up our Add function.
 	 * adder helper class, we are able to add a value.
@@ -56,12 +87,17 @@ public class SimpleList {
 	 * @return List, with value added
 	 */
 	private int[] adder(int[] inputArray, int inputNumber) {
-		int[] holdArray = new int[10];//array act as copy of input array
-		int[] finalArray = new int[10];// array acts as final array we return
+		int arraySize = sizeChange(inputArray,1);
+		/*
+		 * Using ArraySize as the size of array is no longer forced to be 10
+		 */
+		int[] holdArray = new int[arraySize];//array act as copy of input array
+		int[] finalArray = new int[arraySize];// array acts as final array we return
+		
 		for(int i=0; i<count; i++) // copy our inputed array to hold array
 			holdArray[i] = inputArray[i];
 		finalArray[0] = inputNumber;// add provided value in spot 0 of array
-		for(int i=0; i<9; i++)// copy hold array to starting at spot 1
+		for(int i=0; i<(arraySize-1); i++)// copy hold array to starting at spot 1
 			 finalArray[i+1] = holdArray[i];
 		return finalArray;
 	}
@@ -73,9 +109,11 @@ public class SimpleList {
 	 * @return List, with value removed
 	 */
 	private int[] remover(int[] inputArray, int positionValue) {
-		int[] finalArray = new int[10];  // array acts as final array we return
+		int arraySize = sizeChange(inputArray,2);
+		
+		int[] finalArray = new int[arraySize];  // array acts as final array we return
 		if(positionValue == 0){// we act differently if position is at 0.
-			for(int i=1; i<9; i++){// we shift array 1 position down
+			for(int i=1; i<arraySize-1; i++){// we shift array 1 position down
 				finalArray[i-1] = inputArray[i];
 			}
 			return finalArray;
@@ -83,7 +121,7 @@ public class SimpleList {
 		else {
 			for(int i=0; i<positionValue; i++)// we copy array upto the position
 				finalArray[i] = inputArray[i];
-			for(int i=positionValue+1; i<9; i++)// then at position we shift the remaining array down.
+			for(int i=positionValue+1; i<arraySize-1; i++)// then at position we shift the remaining array down.
 				finalArray[i-1] = inputArray[i];
 			return finalArray;
 		}
