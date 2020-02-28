@@ -36,6 +36,15 @@ public class SimpleList {
 		count++;// increment count
 	}
 	/**
+	 * this method similar to add, but value added at end.
+	 * 
+	 * @param value integer we want to add to the list 
+	 */
+	public void apppend(int value) {
+		list = appender(list, value);// adder helper class, result overrides List
+		count++;// increment count
+	}
+	/**
 	 * this method removes a user provided value from our list, if it is present in List
 	 * @param value integer value we want to remove, if present in our list
 	 */
@@ -101,6 +110,23 @@ public class SimpleList {
 			 finalArray[i+1] = holdArray[i];
 		return finalArray;
 	}
+	
+	/**
+	 * similar to the  private adder function above.
+	 * Only difference is adding the value at the end of the array
+	 * @param inputArray
+	 * @param inputNumber
+	 * @return
+	 */
+	private int[] appender(int[] inputArray, int inputNumber){
+		int arraySize = sizeChange(inputArray,1);
+		int[] finalArray = new int[arraySize];// array acts as final array we return		
+		for(int i=0; i<count; i++) // copy our inputed array to hold array
+			finalArray[i] = inputArray[i];
+		finalArray[count] = inputNumber;
+		return finalArray;
+	}
+	
 	/**
 	 * private so we can clean up our Remove function.
 	 * remover helper class, we are able to remove a value.
@@ -126,6 +152,7 @@ public class SimpleList {
 			return finalArray;
 		}
 	}
+	
 	/**
 	 * return the count of the number of item in our array
 	 * @return count of number of item in our array
@@ -154,5 +181,36 @@ public class SimpleList {
 			if(list[i] == searchNum)
 				return i;
 		return -1;
+	}
+	/**
+	 * Return the first element in the list.  If there are no elements in the list, I return -1.
+	 * @return first value of list
+	 */
+	
+	public int first() {
+		int returnValue = -1;
+		if(count != 0) {
+			returnValue = list[0];
+		}
+		return returnValue;	
+	}
+	/**
+	 * Last Return the last element in the list.  If there are no elements in the list, I return -1.
+	 * @return last value of list
+	 */
+	public int last() {
+		int returnValue = -1;
+		if(count != 0) {
+			returnValue = list[count-1];
+		}
+		return returnValue;	
+	}
+	/**
+	 * Size returns the current number of possible locations in the list
+	 * @return the number of empty indexes in our list array
+	 */
+	public int size() {
+		int returnValue = list.length - count;
+		return returnValue;
 	}
 }
